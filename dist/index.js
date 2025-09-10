@@ -241,11 +241,13 @@ var SBModal = class {
     }
     this.renderAll();
     this.isOpen = true;
+    window.setTimeout(this.scrollThumbs, 50);
   };
   selectGroupIdx = (idx) => {
     const transition = () => {
       this.groupIdx = idx;
       this.renderContent();
+      this.scrollThumbs();
     };
     if (document.startViewTransition) {
       document.startViewTransition(transition);
@@ -299,6 +301,12 @@ var SBModal = class {
       );
     }
   };
+  // ensure currently selected thumbnail is visible in thumbnail container
+  scrollThumbs = () => {
+    const thumbs = this.rootEl.querySelector("[data-sbm-ref=thumbs]");
+    const activeThumb = thumbs.querySelector(".simplebox-modal__thumb--active");
+    activeThumb.scrollIntoView();
+  };
   // handle clicks within the modal
   handleClick = (ev) => {
     if (this.config.closeOnBgClick && ev.target === this.rootEl) {
@@ -313,6 +321,14 @@ var SBModal = class {
     } else if (ev.target.matches("[data-sbm-ref=prev-btn]") || ev.target.closest("[data-sbm-ref=prev-btn]")) {
       ev.preventDefault();
       this.selectGroupIdx(this.groupIdx === 0 ? this.groupNodes.length - 1 : this.groupIdx - 1);
+    } else if (ev.target.matches(".simplebox-modal__nav")) {
+      ev.preventDefault();
+      const btn = ev.target.querySelector("[data-sbm-ref");
+      if (btn.matches("[data-sbm-ref=next-btn]")) {
+        this.selectGroupIdx((this.groupIdx + 1) % this.groupNodes.length);
+      } else {
+        this.selectGroupIdx(this.groupIdx === 0 ? this.groupNodes.length - 1 : this.groupIdx - 1);
+      }
     } else if (ev.target.matches(".simplebox-modal__thumb") || ev.target.closest(".simplebox-modal__thumb")) {
       ev.preventDefault();
       let anchor = ev.target;

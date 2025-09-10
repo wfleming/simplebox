@@ -4,9 +4,10 @@
 }
 
 dialog.simplebox-modal {
-  --simplebox-effective-width: calc(100vw - (2 * var(--simplebox-modal-margin, 2rem)));
-  --simplebox-effective-height: calc(100vh - (2 * var(--simplebox-modal-margin, 2rem)));
+  --simplebox-effective-width: calc(100dvw - (2 * var(--simplebox-modal-margin, 2rem)));
+  --simplebox-effective-height: calc(100dvh - (2 * var(--simplebox-modal-margin, 2rem)));
 
+  box-sizing: border-box;
   border: 0;
   margin: var(--simplebox-modal-margin, 2rem);
   width: var(--simplebox-effective-width);
@@ -33,6 +34,7 @@ dialog.simplebox-modal {
   animation: var(--simplebox-modal-fade-in-time, .5s) ease-in-out reverse forwards simpleboxFadeIn;
 
   & button {
+    box-sizing: border-box;
     cursor: pointer;
     height: var(--simplebox-btn-size, 2.5rem);
     width: var(--simplebox-btn-size, 2.5rem);
@@ -130,6 +132,11 @@ dialog.simplebox-modal {
           display: none;
         }
       }
+
+      @media screen and (max-aspect-ratio: 2/3) {
+        /* tall screens (mostly phones/tablets) can use extra space for the thumbs */
+        --simplebox-effective-thumb-height: calc(2 * var(--simplebox-thumb-height, 5rem));
+      }
     }
 
     .simplebox-modal__nav {
@@ -153,7 +160,7 @@ dialog.simplebox-modal {
       flex: 1 0 auto;
       display: flex;
       flex-flow: column nowrap;
-      justify-content: stretch;
+      justify-content: center;
       align-items: stretch;
       position: relative;
 
@@ -200,8 +207,9 @@ dialog.simplebox-modal {
 
       .simplebox-modal__thumb {
         --simplebox-effective-thumb-border-size: var(--simplebox-thumb-border-size, 1px);
-        --simplebox-effective-thumb-content-height: calc(var(--simplebox-effective-thumb-height) - (2 * var(--simplebox-effective-thumb-border-size)));
+        --simplebox-effective-thumb-content-height: var(--simplebox-effective-thumb-height);
 
+        box-sizing: border-box;
         cursor: pointer;
         height: var(--simplebox-effective-thumb-content-height);
         flex: 0 0;
@@ -212,10 +220,14 @@ dialog.simplebox-modal {
         }
 
         & img {
+          box-sizing: border-box;
+          display: block;
           object-fit: cover;
           object-position: center;
           height: 100%;
           max-height: var(--simplebox-effective-thumb-content-height);
+          width: unset;
+          max-width: unset;
         }
       }
     }
