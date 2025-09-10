@@ -1,0 +1,185 @@
+/* lib/styles.css */
+@keyframes simpleboxFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+dialog.simplebox-modal {
+  --simplebox-effective-width: calc(100vw - (2 * var(--simplebox-modal-margin, 2rem)));
+  --simplebox-effective-height: calc(100vh - (2 * var(--simplebox-modal-margin, 2rem)));
+  border: 0;
+  margin: var(--simplebox-modal-margin, 2rem);
+  width: var(--simplebox-effective-width);
+  height: var(--simplebox-effective-height);
+  padding: 0;
+  background: transparent;
+  overflow: clip;
+  &::backdrop {
+    background: var(--simplebox-backdrop-color, rgb(0 0 0 / .8));
+  }
+  &[open] {
+    animation: var(--simplebox-modal-fade-in-time, .5s) ease-in-out forwards simpleboxFadeIn;
+  }
+  @starting-style {
+    opacity: 0;
+  }
+  transition: display var(--simplebox-modal-fade-in-time, .5s) allow-discrete, overlay var(--simplebox-modal-fade-in-time, .5s) allow-discrete;
+  animation: var(--simplebox-modal-fade-in-time, .5s) ease-in-out reverse forwards simpleboxFadeIn;
+  & button {
+    cursor: pointer;
+    height: var(--simplebox-btn-size, 2.5rem);
+    width: var(--simplebox-btn-size, 2.5rem);
+    border: var(--simplebox-btn-border-size, 2px) solid var(--simplebox-btn-border-color, rgb(255 255 255));
+    border-radius: 50%;
+    background: var(--simplebox-btn-bg, rgb(0 0 0));
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--simplebox-btn-transition-time, .2s) all ease-in-out;
+    > svg {
+      display: inline-flex;
+      flex: 0 0 50%;
+      max-width: 50%;
+      max-height: 50%;
+      object-fit: contain;
+      color: var(--simplebox-btn-icon-color, rgb(255 255 255));
+    }
+    &:hover,
+    &:active {
+      background: var(--simplebox-btn-hover-bg, rgb(255 255 255));
+      border-color: var(--simplebox-btn-hover-border-color, rgb(255 255 255));
+      > svg {
+        color: var(--simplebox-btn-hover-icon-color, rgb(0 0 0));
+      }
+    }
+    &[data-sbm-ref=prev-btn] {
+      transform: rotate(180deg);
+    }
+  }
+  .simplebox-modal__outer-body {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: var(--simplebox-effective-height);
+    & button[data-sbm-ref=close-btn] {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  .simplebox-modal__height-shim {
+    width: calc(100% - var(--simplebox-btn-size, 2.5rem));
+    height: calc(100% - var(--simplebox-btn-size, 2.5rem));
+    margin: calc(var(--simplebox-btn-size, 2.5rem) / 2);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+  .simplebox-modal__inner-body {
+    position: relative;
+    padding: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+    width: 100%;
+    .simplebox-modal__content-wrapper {
+      --simplebox-effective-thumb-height: var(--simplebox-thumb-height, 5rem);
+      --simplebox-effective-thumb-top-margin: 1rem;
+      --simplebox-effective-content-height: calc( var(--simplebox-effective-height) - (var(--simplebox-btn-size, 2.5rem) / 2) - var(--simplebox-effective-thumb-height) - var(--simplebox-effective-thumb-top-margin) );
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: stretch;
+      align-items: stretch;
+      width: 100%;
+      &.simplebox-modal__content-wrapper--no-thumbs {
+        --simplebox-effective-content-height: calc(var(--simplebox-effective-height) - (var(--simplebox-btn-size, 2.5rem) / 2));
+        .simplebox-modal__thumbs {
+          display: none;
+        }
+      }
+    }
+    .simplebox-modal__nav {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem;
+      &:nth-child(1 of .simplebox-modal__nav) {
+        left: calc(var(--simplebox-btn-size, 2.5rem) / 2);
+      }
+      &:nth-child(2 of .simplebox-modal__nav) {
+        right: calc(var(--simplebox-btn-size, 2.5rem) / 2);
+      }
+    }
+    .simplebox-modal__content {
+      flex: 1 0 auto;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: stretch;
+      align-items: stretch;
+      position: relative;
+      & img {
+        display: inline-block;
+        max-width: 100%;
+        max-height: var(--simplebox-effective-content-height);
+        object-fit: contain;
+        object-position: center;
+      }
+      & iframe,
+      video {
+        width: calc(100% - 5rem - (2 * var(--simplebox-btn-size, 2.5rem)));
+        height: 100%;
+        align-self: center;
+      }
+      & p {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        background: var(--simplebox-description-bg, rgb(0 0 0 / .8));
+        color: var(--simplebox-description-color, #fff);
+        margin: 0;
+        padding: 1em;
+      }
+    }
+    .simplebox-modal__thumbs {
+      flex: 0 0 auto;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      gap: 1rem;
+      max-height: var(--simplebox-effective-thumb-height);
+      margin: var(--simplebox-effective-thumb-top-margin) calc(2rem + var(--simplebox-btn-size, 2.5rem) + 1rem) 0 calc(2em + var(--simplebox-btn-size, 2.5rem) + .5rem);
+      overflow: auto clip;
+      .simplebox-modal__thumb {
+        --simplebox-effective-thumb-border-size: var(--simplebox-thumb-border-size, 1px);
+        --simplebox-effective-thumb-content-height: calc(var(--simplebox-effective-thumb-height) - (2 * var(--simplebox-effective-thumb-border-size)));
+        cursor: pointer;
+        height: var(--simplebox-effective-thumb-content-height);
+        flex: 0 0;
+        border: var(--simplebox-effective-thumb-border-size) solid transparent;
+        &.simplebox-modal__thumb--active {
+          border-color: var(--simplebox-thumb-active-border-color, #fff);
+        }
+        & img {
+          object-fit: cover;
+          object-position: center;
+          height: 100%;
+          max-height: var(--simplebox-effective-thumb-content-height);
+        }
+      }
+    }
+  }
+}

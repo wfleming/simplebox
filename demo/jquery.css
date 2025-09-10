@@ -1,0 +1,7 @@
+@import "fancybox/dist/css/jquery.fancybox.css";
+@import "fancybox/dist/helpers/css/jquery.fancybox-thumbs.css";
+
+.demo-group img {
+  max-width: 100px;
+  max-height: 100px;
+}
