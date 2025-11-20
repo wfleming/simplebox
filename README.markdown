@@ -39,4 +39,5 @@ initialize SimpleBox with `{selector: '[data-fancybox']}` to get mostly compatib
 ### Customizing / Configuring
 
 Primary customization points are via options passed to the configuration of `SimpleBox()` and via
-css variables. See source for details.
+css variables. See source for details: config options are in `lib/index.mjs` defined under
+`DEFAULT_CONFIG`, and overridable CSS variables are at the top of `lib/styles.css`.
