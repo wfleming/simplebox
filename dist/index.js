@@ -309,7 +309,18 @@ var SBModal = class {
   };
   // handle clicks within the modal
   handleClick = (ev) => {
-    if (this.config.closeOnBgClick && ev.target === this.rootEl) {
+    const treatAsBgEls = [
+      this.rootEl,
+      this.rootEl.querySelector(".simplebox-modal__content"),
+      this.rootEl.querySelector(".simplebox-modal__inner-body"),
+      this.rootEl.querySelector(".simplebox-modal__outer-body")
+    ];
+    const rem = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+    const gap = 2 * parseFloat(
+      window.getComputedStyle(this.rootEl.getPropertyValue("-simplebox-btn-size")) || 5
+    );
+    const bgYCutoff = window.innerHeight - rem * gap;
+    if (this.config.closeOnBgClick && treatAsBgEls.includes(ev.target) && ev.clientY < bgYCutoff) {
       ev.preventDefault();
       this.close();
     } else if (ev.target.matches("[data-sbm-ref=close-btn]") || ev.target.closest("[data-sbm-ref=close-btn]")) {
