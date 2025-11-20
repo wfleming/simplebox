@@ -4,52 +4,75 @@
 }
 
 dialog.simplebox-modal {
-  --simplebox-effective-width: calc(100dvw - (2 * var(--simplebox-modal-margin, 2rem)));
-  --simplebox-effective-height: calc(100dvh - (2 * var(--simplebox-modal-margin, 2rem)));
+  /* intialize variables here. sbm prefix is used for scoped vars here, full simplebox prefix is
+   * used for initializing from :root for overrides. */
+  --sbm-modal-margin-desktop: var(--simplebox-modal-margin-mobile, 2rem);
+  --sbm-modal-margin-mobile: var(--simplebox-modal-margin-desktop, .5rem);
+  --sbm-backdrop-color: var(--simplebox-backdrop-color, rgb(0 0 0 / .8));
+  --sbm-transition-time: var(--simplebox-transition-time, .2s);
+  --sbm-btn-size: var(--simplebox-btn-size, 2.5rem);
+  --sbm-btn-border-size: var(--simplebox-btn-border-size, 2px);
+  --sbm-btn-border-color: var(--simplebox-btn-border-color, rgb(255 255 255));
+  --sbm-btn-hover-border-color: var(--simplebox-btn-hover-border-color, rgb(255 255 255));
+  --sbm-btn-icon-color: var(--simplebox-btn-icon-color, rgb(255 255 255));
+  --sbm-btn-hover-icon-color: var(--simplebox-btn-hover-icon-color, rgb(0 0 0));
+  --sbm-btn-bg: var(--simplebox-btn-bg, rgb(0 0 0));
+  --sbm-btn-hover-bg: var(--simplebox-btn-hover-bg, rgb(255 255 255));
+  --sbm-btn-transition-time: var(--simplebox-btn-transition-time, .2s);
+  --sbm-description-bg: var(--simplebox-description-bg, rgb(0 0 0 / .8));
+  --sbm-description-color: var(--simplebox-description-color, #fff);
+  --sbm-thumb-top-margin: var(--simplebox-thumb-top-margin, .5rem);
+  --sbm-thumb-height: var(--simplebox-thumb-height, 5rem);
+  --sbm-thumb-height-tall-screen: var(--simplebox-thumb-height-tall-screen, 7rem);
+  --sbm-thumb-top-margin: var(--simplebox-thumb-top-margin, 1rem);
+  --sbm-thumb-border-size: var(--simplebox-thumb-border-size, );
+  --sbm-thumb-active-border-color: var(--simplebox-thumb-active-border-color, #fff);
+
+  @media screen and (width > 50rem) {
+    --sbm-modal-margin: var(--sbm-modal-margin-desktop);
+  }
+
+  @media screen and (width <= 50rem) {
+    --sbm-modal-margin: var(--sbm-modal-margin-mobile);
+  }
+
+  @media screen and (max-aspect-ratio: 2/3) {
+    --sbm-thumb-height: var(--sbm-thumb-height-tall-screen);
+  }
 
   box-sizing: border-box;
   border: 0;
-  margin: var(--simplebox-modal-margin, 2rem);
-  width: var(--simplebox-effective-width);
-  height: var(--simplebox-effective-height);
-  padding: 0;
+  margin: 0;
+  min-width: 100dvw;
+  width: 100dvw;
+  min-height: 100dvh;
+  height: 100dvh;
+  padding: var(--sbm-modal-margin);
   background: transparent;
   overflow: clip;
 
   &::backdrop {
-    background: var(--simplebox-backdrop-color, rgb(0 0 0 / .8));
+    background: var(--sbm-backdrop-color);
   }
-
-  &[open] {
-    animation: var(--simplebox-modal-fade-in-time, .5s) ease-in-out forwards simpleboxFadeIn;
-  }
-
-  @starting-style {
-    opacity: 0;
-  }
-
-  /* transition:
-       display var(--simplebox-modal-fade-in-time, 3.5s) ease-in-out allow-discrete,
-       overlay var(--simplebox-modal-fade-in-time, 3.5s) ease-in-out allow-discrete; */
-  animation: var(--simplebox-modal-fade-in-time, .5s) ease-in-out reverse forwards simpleboxFadeIn;
 
   & * {
-    transition: all var(--simplebox-btn-transition-time, .2s) ease-in-out;
+    transition: all var(--sbm-transition-time) ease-in-out;
   }
 
   & button {
     box-sizing: border-box;
     cursor: pointer;
-    height: var(--simplebox-btn-size, 2.5rem);
-    width: var(--simplebox-btn-size, 2.5rem);
-    border: var(--simplebox-btn-border-size, 2px) solid var(--simplebox-btn-border-color, rgb(255 255 255));
+    height: var(--sbm-btn-size);
+    width: var(--sbm-btn-size);
+    border: var(--sbm-btn-border-size) solid var(--sbm-btn-border-color);
     border-radius: 50%;
-    background: var(--simplebox-btn-bg, rgb(0 0 0));
+    background: var(--sbm-btn-bg);
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all var(--sbm-btn-transition-time) ease-in-out;
 
     > svg {
       display: inline-flex;
@@ -57,15 +80,15 @@ dialog.simplebox-modal {
       max-width: 50%;
       max-height: 50%;
       object-fit: contain;
-      color: var(--simplebox-btn-icon-color, rgb(255 255 255));
+      color: var(--sbm-btn-icon-color);
     }
 
     &:hover, &:active {
-      background: var(--simplebox-btn-hover-bg, rgb(255 255 255));
-      border-color: var(--simplebox-btn-hover-border-color, rgb(255 255 255));
+      background: var(--sbm-btn-hover-bg);
+      border-color: var(--sbm-btn-hover-border-color);
 
       > svg {
-        color: var(--simplebox-btn-hover-icon-color, rgb(0 0 0));
+        color: var(--sbm-btn-hover-icon-color);
       }
     }
 
@@ -82,19 +105,20 @@ dialog.simplebox-modal {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: var(--simplebox-effective-height);
+    height: 100%;
+    min-height: 100%;
 
     & button[data-sbm-ref=close-btn] {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: var(--sbm-modal-margin);
+      right: var(--sbm-modal-margin);
     }
   }
 
   .simplebox-modal__height-shim {
-    width: calc(100% - var(--simplebox-btn-size, 2.5rem));
-    height: calc(100% - var(--simplebox-btn-size, 2.5rem));
-    margin: calc(var(--simplebox-btn-size, 2.5rem) / 2);
+    width: calc(100% - var(--sbm-btn-size));
+    height: calc(100% - var(--sbm-btn-size));
+    margin: calc(var(--sbm-btn-size) / 2);
 
     display: flex;
     flex-flow: row nowrap;
@@ -110,75 +134,66 @@ dialog.simplebox-modal {
     justify-content: stretch;
     align-items: stretch;
     width: 100%;
+    height: 100%;
 
     .simplebox-modal__content-wrapper {
-      --simplebox-effective-thumb-height: var(--simplebox-thumb-height, 5rem);
-      --simplebox-effective-thumb-top-margin: 1rem;
-      /* permissible height for the content area with the full size image */
-      --simplebox-effective-content-height: calc(
-        var(--simplebox-effective-height)
-        - (var(--simplebox-btn-size, 2.5rem) / 2)
-        - var(--simplebox-effective-thumb-height)
-        - var(--simplebox-effective-thumb-top-margin)
-      );
+      --sbm-content-max-height: calc(100% - var(--sbm-thumb-height) - var(--sbm-thumb-top-margin));
 
       display: flex;
       flex-flow: column nowrap;
       justify-content: stretch;
       align-items: stretch;
       width: 100%;
+      height: 100%;
 
       &.simplebox-modal__content-wrapper--no-thumbs {
-        --simplebox-effective-content-height: calc(var(--simplebox-effective-height) - (var(--simplebox-btn-size, 2.5rem) / 2));
+        --sbm-content-max-height: 100%;
 
         .simplebox-modal__thumbs {
           display: none;
         }
       }
-
-      @media screen and (max-aspect-ratio: 2/3) {
-        /* tall screens (mostly phones/tablets) can use extra space for the thumbs */
-        --simplebox-effective-thumb-height: calc(2 * var(--simplebox-thumb-height, 5rem));
-      }
     }
 
     .simplebox-modal__nav {
+      --sbm-btn-pad: 1.5rem;
+      --sbm-btn-pos: calc((-1 * var(--sbm-btn-pad)) + (-1 * (var(--sbm-btn-size) / 2)));
       position: absolute;
-      top: calc(50% - calc(var(--simplebox-btn-size, 2.5rem) / 2));
+      top: calc(50% - calc(var(--sbm-btn-size) / 2));
       height: auto;
-      padding: var(--simplebox-btn-pad, 1.5rem);
+      padding: var(--sbm-btn-pad);
       display: flex;
       justify-content: center;
       align-items: center;
 
       &:nth-child(1 of .simplebox-modal__nav) {
-        left: calc((var(--simplebox-btn-size, 2.5rem) / 2) - var(--simplebox-btn-pad, 1.5rem));
+        left: var(--sbm-btn-pos);
       }
       &:nth-child(2 of .simplebox-modal__nav) {
-        right: calc((var(--simplebox-btn-size, 2.5rem) / 2) - var(--simplebox-btn-pad, 1.5rem));
+        right: var(--sbm-btn-pos);
       }
     }
 
     .simplebox-modal__content {
-      flex: 1 0 auto;
+      flex: 1 1 auto;
       display: flex;
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
       position: relative;
+      max-height: var(--sbm-content-max-height);
 
       & img {
         display: inline-block;
         max-width: 100%;
-        min-height: var(--simplebox-effective-content-height);
-        max-height: var(--simplebox-effective-content-height);
+        max-height: 100%;
         object-fit: contain;
         object-position: center;
       }
 
       & iframe, video {
         /* videos are better off not sitting underneath nav */
-        width: calc(100% - 5rem - (2 * var(--simplebox-btn-size, 2.5rem)));
+        width: calc(100% - 2rem - (2 * var(--sbm-btn-size)));
         height: 100%;
         align-self: center;
       }
@@ -187,8 +202,8 @@ dialog.simplebox-modal {
         width: 100%;
         position: absolute;
         bottom: 0;
-        background: var(--simplebox-description-bg, rgb(0 0 0 / .8));
-        color: var(--simplebox-description-color, #fff);
+        background: var(--sbm-description-bg);
+        color: var(--sbm-description-color);
         margin: 0;
         padding: 1em;
       }
@@ -200,27 +215,21 @@ dialog.simplebox-modal {
       flex-flow: row nowrap;
       justify-content: flex-start;
       gap: 1rem;
-      max-height: var(--simplebox-effective-thumb-height);
-      margin:
-        var(--simplebox-effective-thumb-top-margin)
-        calc(2rem + var(--simplebox-btn-size, 2.5rem) + 1rem) /* left/right margin is btn size plus the margin on the __nav wrapper, plus a bit extra */
-        0
-        calc(2em + var(--simplebox-btn-size, 2.5rem) + .5rem);
+      max-height: var(--sbm-thumb-height);
+      align-self: stretch;
+      margin: var(--sbm-thumb-top-margin) 0 0 0;
 
       overflow: auto clip;
 
       .simplebox-modal__thumb {
-        --simplebox-effective-thumb-border-size: var(--simplebox-thumb-border-size, 1px);
-        --simplebox-effective-thumb-content-height: var(--simplebox-effective-thumb-height);
-
         box-sizing: border-box;
         cursor: pointer;
-        height: var(--simplebox-effective-thumb-content-height);
-        flex: 0 0;
-        border: var(--simplebox-effective-thumb-border-size) solid transparent;
+        height: var(--sbm-thumb-height);
+        flex: 0 0 var(--sbm-thumb-height);
+        border: var(--sbm-thumb-border-size) solid transparent;
 
         &.simplebox-modal__thumb--active {
-          border-color: var(--simplebox-thumb-active-border-color, #fff);
+          border-color: var(--sbm-thumb-active-border-color);
         }
 
         & img {
@@ -229,7 +238,7 @@ dialog.simplebox-modal {
           object-fit: cover;
           object-position: center;
           height: 100%;
-          max-height: var(--simplebox-effective-thumb-content-height);
+          max-height: 100%;
           aspect-ratio: 1 / 1;
           width: unset;
           max-width: unset;
