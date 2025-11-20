@@ -144,18 +144,18 @@ dialog.simplebox-modal {
 
     .simplebox-modal__nav {
       position: absolute;
-      top: 0;
-      height: 100%;
+      top: calc(50% - calc(var(--simplebox-btn-size, 2.5rem) / 2));
+      height: auto;
+      padding: var(--simplebox-btn-pad, 1.5rem);
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 1rem;
 
       &:nth-child(1 of .simplebox-modal__nav) {
-        left: calc(var(--simplebox-btn-size, 2.5rem) / 2);
+        left: calc((var(--simplebox-btn-size, 2.5rem) / 2) - var(--simplebox-btn-pad, 1.5rem));
       }
       &:nth-child(2 of .simplebox-modal__nav) {
-        right: calc(var(--simplebox-btn-size, 2.5rem) / 2);
+        right: calc((var(--simplebox-btn-size, 2.5rem) / 2) - var(--simplebox-btn-pad, 1.5rem));
       }
     }
 
@@ -164,12 +164,13 @@ dialog.simplebox-modal {
       display: flex;
       flex-flow: column nowrap;
       justify-content: center;
-      align-items: stretch;
+      align-items: center;
       position: relative;
 
       & img {
         display: inline-block;
         max-width: 100%;
+        min-height: var(--simplebox-effective-content-height);
         max-height: var(--simplebox-effective-content-height);
         object-fit: contain;
         object-position: center;
