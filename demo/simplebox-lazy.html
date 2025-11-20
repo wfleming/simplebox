@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="build/simplebox.css">
+  </head>
+  <body>
+    <!--
+      Safari has some bugs related to lazy-loaded images, this is a separate demo page for
+      testing that. Kind of needs to be a separate page (or I would need to go hunt down some new
+      img urls) since the bug only appears for images not yet in the cache.
+    -->
+    <div class="demo-group">
+      <h2>large group with loading=lazy & alt txt</h2>
+      <a href="https://upload.wikimedia.org/wikipedia/commons/2/24/Coral_%28Favia_favus%29%2C_parque_nacional_Ras_Muhammad%2C_Egipto%2C_2022-03-27%2C_DD_12.jpg" data-simplebox="large-group-lazy">
+        <img loading="lazy" alt="Dolore pariatur tempore non dolor neque. Atque error dolor iusto quis ullam in sit cumque. Quia sed consequatur dolores aut corrupti" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Coral_%28Favia_favus%29%2C_parque_nacional_Ras_Muhammad%2C_Egipto%2C_2022-03-27%2C_DD_12.jpg/330px-Coral_%28Favia_favus%29%2C_parque_nacional_Ras_Muhammad%2C_Egipto%2C_2022-03-27%2C_DD_12.jpg" />
+      </a>
+      <a href="https://upload.wikimedia.org/wikipedia/commons/d/d3/M%C3%BCnster%2C_Send%2C_Riesenrad_--_2024_--_6503.jpg" data-simplebox="large-group-lazy">
+        <img loading="lazy" alt="Dolore pariatur tempore non dolor neque. Atque error dolor iusto quis ullam in sit cumque. Quia sed consequatur dolores aut corrupti" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/M%C3%BCnster%2C_Send%2C_Riesenrad_--_2024_--_6503.jpg/330px-M%C3%BCnster%2C_Send%2C_Riesenrad_--_2024_--_6503.jpg" />
+      </a>
+      <a href="https://upload.wikimedia.org/wikipedia/commons/7/7e/1961_Cooper_T53_Donington_Park_2023_01.jpg" data-simplebox="large-group-lazy">
+        <img loading="lazy" alt="Dolore pariatur tempore non dolor neque. Atque error dolor iusto quis ullam in sit cumque. Quia sed consequatur dolores aut corrupti" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/1961_Cooper_T53_Donington_Park_2023_01.jpg/330px-1961_Cooper_T53_Donington_Park_2023_01.jpg" />
+      </a>
+      <!-- more images in the group but not displayed so they're not in cache when opening lightbox -->
+      <div style="display: none;">
+        <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Oilshale_mine_01.jpg/2560px-Oilshale_mine_01.jpg" data-simplebox="large-group-lazy">
+          <img loading="lazy" alt="Dolore pariatur tempore non dolor neque. Atque error dolor iusto quis ullam in sit cumque. Quia sed consequatur dolores aut corrupti" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Oilshale_mine_01.jpg/2560px-Oilshale_mine_01.jpg" />
+        </a>
+        <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Stained_glass_-_Kutna_Hora.jpg/500px-Stained_glass_-_Kutna_Hora.jpg" data-simplebox="large-group-lazy">
+          <img loading="lazy" alt="Dolore pariatur tempore non dolor neque. Atque error dolor iusto quis ullam in sit cumque. Quia sed consequatur dolores aut corrupti" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Stained_glass_-_Kutna_Hora.jpg/500px-Stained_glass_-_Kutna_Hora.jpg" />
+        </a>
+        <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Santa_Maria_del_Popolo_September_2015-3.jpg/500px-Santa_Maria_del_Popolo_September_2015-3.jpg" data-simplebox="large-group-lazy">
+          <img loading="lazy" alt="Dolore pariatur tempore non dolor neque. Atque error dolor iusto quis ullam in sit cumque. Quia sed consequatur dolores aut corrupti" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Santa_Maria_del_Popolo_September_2015-3.jpg/500px-Santa_Maria_del_Popolo_September_2015-3.jpg" />
+        </a>
+        <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Raya_de_arrecife_%28Taeniura_lymma%29%2C_mar_Rojo%2C_Egipto%2C_2023-04-14%2C_DD_64.jpg/960px-Raya_de_arrecife_%28Taeniura_lymma%29%2C_mar_Rojo%2C_Egipto%2C_2023-04-14%2C_DD_64.jpg" data-simplebox="large-group-lazy">
+          <img loading="lazy" alt="Dolore pariatur tempore non dolor neque. Atque error dolor iusto quis ullam in sit cumque. Quia sed consequatur dolores aut corrupti" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Raya_de_arrecife_%28Taeniura_lymma%29%2C_mar_Rojo%2C_Egipto%2C_2023-04-14%2C_DD_64.jpg/960px-Raya_de_arrecife_%28Taeniura_lymma%29%2C_mar_Rojo%2C_Egipto%2C_2023-04-14%2C_DD_64.jpg" />
+        </a>
+      </div>
+    </div>
+
+    <script src="build/simplebox.js"></script>
+  </body>
+</html>

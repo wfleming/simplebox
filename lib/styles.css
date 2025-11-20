@@ -28,10 +28,14 @@ dialog.simplebox-modal {
     opacity: 0;
   }
 
-  transition:
-    display var(--simplebox-modal-fade-in-time, .5s) allow-discrete,
-    overlay var(--simplebox-modal-fade-in-time, .5s) allow-discrete;
+  /* transition:
+       display var(--simplebox-modal-fade-in-time, 3.5s) ease-in-out allow-discrete,
+       overlay var(--simplebox-modal-fade-in-time, 3.5s) ease-in-out allow-discrete; */
   animation: var(--simplebox-modal-fade-in-time, .5s) ease-in-out reverse forwards simpleboxFadeIn;
+
+  & * {
+    transition: all var(--simplebox-btn-transition-time, .2s) ease-in-out;
+  }
 
   & button {
     box-sizing: border-box;
@@ -46,7 +50,6 @@ dialog.simplebox-modal {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: var(--simplebox-btn-transition-time, .2s) all ease-in-out;
 
     > svg {
       display: inline-flex;
@@ -226,6 +229,7 @@ dialog.simplebox-modal {
           object-position: center;
           height: 100%;
           max-height: var(--simplebox-effective-thumb-content-height);
+          aspect-ratio: 1 / 1;
           width: unset;
           max-width: unset;
         }
