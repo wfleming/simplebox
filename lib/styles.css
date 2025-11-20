@@ -199,6 +199,8 @@ dialog.simplebox-modal {
       }
 
       & p {
+        --sbm-alpha-bg: color(from var(--sbm-description-bg) srgb r g b / 0);
+
         width: 100%;
         position: absolute;
         bottom: 0;
@@ -206,6 +208,14 @@ dialog.simplebox-modal {
         color: var(--sbm-description-color);
         margin: 0;
         padding: 1em;
+        overflow-y: auto;
+        max-height: 6rem;
+
+        &[data-collapsed] {
+          max-height: 2rem;
+          mask-image: linear-gradient(to top, var(--sbm-alpha-bg), var(--sbm-description-bg));
+          overflow-y: clip;
+        }
       }
     }
 
