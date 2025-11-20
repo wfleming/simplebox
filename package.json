@@ -2,7 +2,7 @@
   "name": "@wfleming/simplebox",
   "type": "module",
   "main": "dist/index.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "keywords": ["fancybox", "lightbox"],
   "files": [
     "dist",

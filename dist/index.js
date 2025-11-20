@@ -121,11 +121,16 @@ var DEFAULT_CONFIG = {
         throw new Error(`SimpleBox bug: no content handler for ${hrefMediaType(node.href)}`);
     }
   },
-  // determine the URL to use as a thumbnail for a node. If the node contains an `<img/>`, use that
-  // (on the assumption that that's probably already a smaller version of the full asset and already
-  // loaded). Otherwise use the full-size asset, with fallback for non-image extensions.
+  // Determine the URL to use as a thumbnail for a node:
+  // - Use data-simplebox-thumb-href first if it exists (useful for non-image assets like videos)
+  // - If the node contains an `<img/>`, use that (on the assumption that it's probably already a
+  //   smaller version of the full asset and already loaded).
+  // - Otherwise use the full-size asset if it's an image
+  // - Fallback to a file icon
   buildThumbnailUrl: (node) => {
-    if (node.querySelector("img")) {
+    if (node.dataset.simpleboxThumbHref) {
+      return node.dataset.simpleboxThumbHref;
+    } else if (node.querySelector("img")) {
       return node.querySelector("img").src;
     } else if (hrefMediaType(node.href) === "image") {
       return node.href;
@@ -309,17 +314,12 @@ var SBModal = class {
   };
   // handle clicks within the modal
   handleClick = (ev) => {
-    const treatAsBgEls = [
+    const innerBody = this.rootEl.querySelector(".simplebox-modal__inner-body"), treatAsBgEls = [
       this.rootEl,
       this.rootEl.querySelector(".simplebox-modal__content"),
-      this.rootEl.querySelector(".simplebox-modal__inner-body"),
+      innerBody,
       this.rootEl.querySelector(".simplebox-modal__outer-body")
-    ];
-    const rem = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
-    const gap = 2 * parseFloat(
-      window.getComputedStyle(this.rootEl.getPropertyValue("-simplebox-btn-size")) || 5
-    );
-    const bgYCutoff = window.innerHeight - rem * gap;
+    ], bgYCutoff = innerBody.getBoundingClientRect().bottom;
     if (this.config.closeOnBgClick && treatAsBgEls.includes(ev.target) && ev.clientY < bgYCutoff) {
       ev.preventDefault();
       this.close();
@@ -340,13 +340,19 @@ var SBModal = class {
       } else {
         this.selectGroupIdx(this.groupIdx === 0 ? this.groupNodes.length - 1 : this.groupIdx - 1);
       }
+    } else if (ev.target.matches(".simplebox-modal__content p")) {
+      if (ev.target.hasAttribute("data-collapsed")) {
+        ev.target.removeAttribute("data-collapsed");
+      } else {
+        ev.target.dataset.collapsed = "";
+      }
     } else if (ev.target.matches(".simplebox-modal__thumb") || ev.target.closest(".simplebox-modal__thumb")) {
       ev.preventDefault();
       let anchor = ev.target;
       if (!anchor.matches(".simplebox-modal__thumb")) {
         anchor = anchor.closest(".simplebox-modal__thumb");
       }
-      this.selectGroupIdx(anchor.dataset.sbmGroupIdx);
+      this.selectGroupIdx(Number(anchor.dataset.sbmGroupIdx));
     }
   };
   close = () => {
