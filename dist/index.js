@@ -310,7 +310,7 @@ var SBModal = class {
   scrollThumbs = () => {
     const thumbs = this.rootEl.querySelector("[data-sbm-ref=thumbs]");
     const activeThumb = thumbs.querySelector(".simplebox-modal__thumb--active");
-    activeThumb.scrollIntoView();
+    activeThumb?.scrollIntoView?.();
   };
   // handle clicks within the modal
   handleClick = (ev) => {
